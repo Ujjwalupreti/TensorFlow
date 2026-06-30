@@ -29,6 +29,20 @@ def binary_cross_entropy(predictions, targets, eps=1e-15):
         total += -(t * math.log(p_clipped) + (1 - t) * math.log(1 - p_clipped))
     return total / n
 
+def BCE(prediction,targets,eps=1e-15):
+    assert len(prediction) == len(targets), "Error"
+    n = len(prediction)
+    total = 0.0
+    for p,t in zip(prediction,targets):
+        p_clipped = p
+        if p<eps:
+            p_clipped = eps
+        elif p> (1 - eps):
+            p_clipped = 1 - eps
+    
+        total += -(t*math.log(p_clipped) + (1-t)*math.log(1-p_clipped))
+    
+    return total/n        
 
 def bce_gradient(predictions, targets, eps=1e-15):
     assert len(predictions) == len(targets), "predictions and targets must have the same length"
